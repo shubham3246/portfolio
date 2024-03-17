@@ -31,6 +31,8 @@ class Project(models.Model):
     published = models.BooleanField(default=False)
     best_project = models.BooleanField(default=False)
     slug = models.CharField(max_length=1000, null=True,  blank=True)
+
+
     
 
 
@@ -41,3 +43,12 @@ class Project(models.Model):
         if not self.slug:
          self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+
+
+
+class Glance(models.Model):
+    title = models.CharField(max_length = 200)
+    description = models.CharField(max_length = 200)
+    video_link = models.CharField(max_length = 500, blank=True, null=True)
+    channel_link = models.CharField(max_length = 500)

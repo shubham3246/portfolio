@@ -23,26 +23,30 @@
                     <img src="https://source.unsplash.com/1900x500/?university,code" class="d-block w-100 h-100"
                         alt="..." />
                     <div class="carousel-caption d-none d-md-block">
-                        <div>
-                            <h5><span class="text-light bg-dark">Gautam singh</span></h5>
-                        </div>
+                        <div  class="btn btn-lg btn-primary bg-info">𝐒𝐡𝐮𝐛𝐡𝐚𝐦-𝐊𝐮𝐦𝐚𝐫-𝐏𝐚𝐭𝐞𝐥</div>
+                        <!-- <h5><span class="text-light">Shubham Kumar Patel</span></h5> -->
                         <h3 class="typing1"></h3>
+                        <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View all projects</a>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="https://source.unsplash.com/1900x500/?university,programming" class="d-block w-100 h-100"
                         alt="..." />
                     <div class="carousel-caption d-none d-md-block">
-                        <h5 class="text-dark">Gautam singh</h5>
+                        <div  class="btn btn-lg btn-primary bg-info">𝐒𝐡𝐮𝐛𝐡𝐚𝐦-𝐊𝐮𝐦𝐚𝐫-𝐏𝐚𝐭𝐞𝐥</div>
+                        
                         <h3 class="typing2"></h3>
+                        <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View all projects</a>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="https://source.unsplash.com/1900x500/?university,mountain" class="d-block w-100 h-100"
                         alt="..." />
                     <div class="carousel-caption d-none d-md-block">
-                        <h5 class="text-">Gautam singh</h5>
+                        <div  class="btn btn-lg btn-primary bg-info">𝐒𝐡𝐮𝐛𝐡𝐚𝐦-𝐊𝐮𝐦𝐚𝐫-𝐏𝐚𝐭𝐞𝐥</div>
+                        
                         <h3 class="typing3"></h3>
+                        <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View all projects</a>
                     </div>
                 </div>
             </div>
@@ -58,9 +62,29 @@
     </div>
     <h2 class="text-center my-3 py-3">Me at a Glance</h2>
     <div class="conatainer d-flex justify-content-center">
+        {% for glance in me_at_glance %}
         <div class="row mx-3">
             <div class="card" style="width: 18rem">
-                <img src="https://source.unsplash.com/500x300/?code,html,nextjs" class="card-img-top" alt="..." />
+                <!-- <img src="https://source.unsplash.com/500x300/?gaming,code,html" class="card-img-top" alt="..." /> -->
+                <iframe width="287" height="155" src="{{glance.video_link}}" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+
+                <div class="card-body">
+                    <h5 class="card-title">{{glance.title}}</h5>
+                    <p class="card-text">
+                        {{glance.description}}
+                    </p>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{glance.channel_link}}" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- <div class="row mx-3">
+            <div class="card" style="width: 18rem">
+                <iframe width="287" height="155" src="https://www.youtube.com/embed/FTRSJaIAF8Y?si=Ek-ECfNwmyPBbMJE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 <div class="card-body">
                     <h5 class="card-title">Developer</h5>
                     <p class="card-text">
@@ -73,21 +97,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mx-3">
-            <div class="card" style="width: 18rem">
-                <img src="https://source.unsplash.com/500x300/?gaming,code,html" class="card-img-top" alt="..." />
-                <div class="card-body">
-                    <h5 class="card-title">Gaming</h5>
-                    <p class="card-text">
-                        Some quick example text to build on the card title and make
-                        up the bulk of the card's content.
-                    </p>
-                    <div class="d-flex justify-content-center">
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <div class="row mx-3">
             <div class="card" style="width: 18rem">
                 <img src="https://source.unsplash.com/500x300/?code,teching" class="card-img-top" alt="..." />
@@ -103,7 +113,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <hr>
@@ -120,7 +130,7 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ project.title }}</h5>
-                        <p class="card-text">{{ project.description|truncatechars:30 }}</p>
+                        <p class="card-text">{{ project.description|truncatechars:30| safe}}</p>
                         <p class="card-text"><strong>Technology:</strong> {{ project.technology }}</p>
                         <div class="d-flex justify-content-center">
 
@@ -167,7 +177,8 @@
         strings: ["", " 🆆🅴🅻🅲🅾🅼🅴 🆃🅾 🆂🅷🆁🅴🅴  🅸🅽🆂🆃🅸🆃🆄🆃🅴 🅲🅾🅼🅿🆄🆃🅴🆁  <h3>{{course.course_name}}</h3>"],
         typeSpeed: 100,
         backSpeed: 60,
-        loop: true
+        loop: true,
+        // cursor
     });
 
     setTimeout(() => {

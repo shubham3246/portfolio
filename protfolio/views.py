@@ -2,14 +2,24 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from protfolio .models import Contact
 from django.contrib import messages
-from .models import Project
+from .models import Project, Glance
 from django.utils.text import slugify
 
 def home(request):
     # return HttpResponse("Hello, world. You're at the Gautam singh.")
+    
     best_projects = Project.objects.filter(best_project=True)
-    # print(best_projects[0])
-    context = {'name':'gautam' ,'course':'djnago', 'projects': best_projects}
+    me_at_glance = Glance.objects.all()
+    for glance in me_at_glance:
+        temp_video_link = glance.video_link[32:]
+        temp_video_link = "https://www.youtube.com/embed/"+temp_video_link
+        glance.video_link = temp_video_link
+    context = {'name':'gautam' ,
+               'course':'djnago', 
+               'projects': best_projects, 
+               'me_at_glance': me_at_glance, 
+            #    'video-link': temp_video_link
+               }
     return render(request, 'home.html', context)
 
 

@@ -7,7 +7,9 @@ from django.utils.text import slugify
 
 def home(request):
     # return HttpResponse("Hello, world. You're at the Gautam singh.")
-    context = {'name':'gautam' ,'course':'djnago'}
+    best_projects = Project.objects.filter(best_project=True)
+    # print(best_projects[0])
+    context = {'name':'gautam' ,'course':'djnago', 'projects': best_projects}
     return render(request, 'home.html', context)
 
 
@@ -49,6 +51,7 @@ def project_detail(request, course_slug):
         "title": project.title,
         "description": project.description,
         "technology": project.technology,
+        "collaborators": project.collaborators,
         "image": project.project_image,
         "demo_link": project.demo_link,
         "source_link": project.source_link,

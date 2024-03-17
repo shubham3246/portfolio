@@ -5,6 +5,10 @@
         
     {% block start %}
     <h2 class="text-center my-3 py-3">{{title}}</h2>
+    {% if collaborators %}
+    <h5 class="text-center my-3 py-3 text-primary"><span class="text-secondary">Collaborators : </span>{{collaborators}}</h5>
+    {% endif %}
+
     <div class="container">
         <img src="/media/{{image}}" class="card-img-top p-5 img-fluid img-centered img-responsive"
             style="height:300px;width:400px">

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -19,7 +20,8 @@ class Contact(models.Model):
 
 class Project(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    collaborators = models.CharField(max_length=300, blank = True, null = True)
+    description = RichTextField(config_name='default',max_length=300000,blank=True)
     technology = models.CharField(max_length=50)
     project_image = models.ImageField(upload_to='project_images/')
     demo_link = models.URLField(max_length=200)
@@ -27,6 +29,7 @@ class Project(models.Model):
     video_link = models.CharField(max_length=500, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(default=False)
+    best_project = models.BooleanField(default=False)
     slug = models.CharField(max_length=1000, null=True,  blank=True)
     
 

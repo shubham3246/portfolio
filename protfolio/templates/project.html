@@ -8,7 +8,9 @@
         {% for project in projects %}
         <div class="col-md-4">
           <div class="card mb-4">
-            <img src="{{ project.project_image.url }}" class="card-img-top" alt="{{ project.project_image.url }}">
+            <div class="">
+              <img src="{{ project.project_image.url }}" class="card-img-top object-fit-contain" alt="{{ project.project_image.url }}">
+            </div>
             <div class="card-body">
               <h5 class="card-title">{{ project.title }}</h5>
               <p class="card-text">{{ project.description|truncatechars:30 }}</p>

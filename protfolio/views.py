@@ -2,29 +2,31 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from protfolio .models import Contact
 from django.contrib import messages
-from .models import Project, Glance
+from .models import Project, Glance, About
 from django.utils.text import slugify
 
 def home(request):
-    # return HttpResponse("Hello, world. You're at the Gautam singh.")
-    
     best_projects = Project.objects.filter(best_project=True)
     me_at_glance = Glance.objects.all()
     for glance in me_at_glance:
         temp_video_link = glance.video_link[32:]
         temp_video_link = "https://www.youtube.com/embed/"+temp_video_link
         glance.video_link = temp_video_link
+
+
+    about = About.objects.all()
+    print(about[0].image)
+    
     context = {'name':'gautam' ,
                'course':'djnago', 
                'projects': best_projects, 
                'me_at_glance': me_at_glance, 
-            #    'video-link': temp_video_link
+               'about' : about[0]
                }
     return render(request, 'home.html', context)
 
 
 def about(request):
-    # return HttpResponse("Hello, world. You're at the about.(/about)")
     return render(request, 'about.html')
 
 
@@ -34,14 +36,11 @@ def contact(request):
         email= request.POST['email']
         phone= request.POST['phone']
         desc= request.POST['content']
-        # print(Name,email,phone,desc)
         contact= Contact(name=name,email=email,phone=phone,desc=desc)
         contact.save()
         messages.success(
                 request, "Your message has been successfully sent")
-        # print("save all the date")
 
-    # return HttpResponse("Hello, world. You're at the contact.(/contact)")
     return render(request, 'contact.html')
 
 

@@ -52,3 +52,17 @@ class Glance(models.Model):
     description = models.CharField(max_length = 200)
     video_link = models.CharField(max_length = 500, blank=True, null=True)
     channel_link = models.CharField(max_length = 500)
+
+
+class Cerficate(models.Model):
+    description = models.TextField()
+    image = models.ImageField(upload_to='media/certificates')
+    news = models.TextField()
+    bugFix = models.TextField()
+
+class About(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    dob = models.CharField(max_length=20)
+    image = models.ImageField(upload_to='protfolio/static/footer_profile')
+    video_link = models.CharField(max_length=400)

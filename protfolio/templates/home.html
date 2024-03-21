@@ -152,7 +152,11 @@
     <!-- certificates card -->
     <article class="col-md-12">
         <header class="mt-5"></header>
+<<<<<<< HEAD
         <!-- BLOG CARDS -->
+=======
+        <!-- Certificates -->
+>>>>>>> 0d1e1a743bd0ec25aa3b43d01496ab16cb771b4c
         <h2>Certificates</h2>
         <div class="cards-1 section-gray">
             <div class="container">
@@ -269,6 +273,7 @@
     </article>
 
 
+<<<<<<< HEAD
     <h2 class="text-center mt-3 pt-3">About me</h2>
     <div class='card_yellow'>
         <div class='card_left'>
@@ -340,6 +345,49 @@
       </div>
       
     
+=======
+    <div class="blog-slider">
+        <div class="blog-slider__wrp swiper-wrapper">
+          <div class="blog-slider__item swiper-slide">
+            <div class="blog-slider__img">
+              
+              <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759872/kuldar-kalvik-799168-unsplash.webp" alt="">
+            </div>
+            <div class="blog-slider__content">
+              <span class="blog-slider__code">26 December 2019</span>
+              <div class="blog-slider__title">Lorem Ipsum Dolor</div>
+              <div class="blog-slider__text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae voluptate repellendus magni illo ea animi? </div>
+              <a href="#" class="blog-slider__button">READ MORE</a>
+            </div>
+          </div>
+          <div class="blog-slider__item swiper-slide">
+            <div class="blog-slider__img">
+              <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759871/jason-leung-798979-unsplash.webp" alt="">
+            </div>
+            <div class="blog-slider__content">
+              <span class="blog-slider__code">26 December 2019</span>
+              <div class="blog-slider__title">Lorem Ipsum Dolor2</div>
+              <div class="blog-slider__text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae voluptate repellendus magni illo ea animi?</div>
+              <a href="#" class="blog-slider__button">READ MORE</a>
+            </div>
+          </div>
+          
+          <div class="blog-slider__item swiper-slide">
+            <div class="blog-slider__img">
+              <img src="https://res.cloudinary.com/muhammederdem/image/upload/q_60/v1535759871/alessandro-capuzzi-799180-unsplash.webp" alt="">
+            </div>
+            <div class="blog-slider__content">
+              <span class="blog-slider__code">26 December 2019</span>
+              <div class="blog-slider__title">Lorem Ipsum Dolor</div>
+              <div class="blog-slider__text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae voluptate repellendus magni illo ea animi?</div>
+              <a href="#" class="blog-slider__button">READ MORE</a>
+            </div>
+          </div>
+          
+        </div>
+        <div class="blog-slider__pagination"></div>
+      </div>
+>>>>>>> 0d1e1a743bd0ec25aa3b43d01496ab16cb771b4c
 
 </div>
 <!-- main content end  -->
@@ -366,6 +414,20 @@
     crossorigin="anonymous"></script>
 
 <script>
+    var swiper = new Swiper('.blog-slider', {
+      spaceBetween: 30,
+      effect: 'fade',
+      loop: true,
+      mousewheel: {
+        invert: false,
+      },
+      // autoHeight: true,
+      pagination: {
+        el: '.blog-slider__pagination',
+        clickable: true,
+      }
+    });
+    
     var typed = new Typed(".typing1", {
         strings: ["", " 🆆🅴🅻🅲🅾🅼🅴 🆃🅾 🆂🅷🆁🅴🅴  🅸🅽🆂🆃🅸🆃🆄🆃🅴 🅲🅾🅼🅿🆄🆃🅴🆁  <h3>{{course.course_name}}</h3>"],
         typeSpeed: 100,

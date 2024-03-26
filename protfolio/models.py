@@ -7,7 +7,6 @@ from ckeditor.fields import RichTextField
 
 
 class Contact(models.Model):
-
     name = models.CharField(max_length=30)
     phone = models.CharField(max_length=10)
     email = models.EmailField()
@@ -32,10 +31,6 @@ class Project(models.Model):
     best_project = models.BooleanField(default=False)
     slug = models.CharField(max_length=1000, null=True,  blank=True)
 
-
-    
-
-
     def __str__(self):
         return self.title
     
@@ -56,7 +51,7 @@ class Glance(models.Model):
 
 class Cerficate(models.Model):
     description = models.TextField()
-    image = models.ImageField(upload_to='media/certificates')
+    image = models.ImageField(upload_to='media/certificates/')
     news = models.TextField()
     bugFix = models.TextField()
 
@@ -64,5 +59,7 @@ class About(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     dob = models.CharField(max_length=20)
-    image = models.ImageField(upload_to='protfolio/static/footer_profile')
+    image1 = models.ImageField(upload_to='footer_profile/', null=True)
+    image2 = models.ImageField(upload_to='footer_profile/', null=True)
+    image3 = models.ImageField(upload_to='footer_profile/', null=True)
     video_link = models.CharField(max_length=400)

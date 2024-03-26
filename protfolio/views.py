@@ -2,12 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from protfolio .models import Contact
 from django.contrib import messages
-from .models import Project, Glance, About
+from .models import Project, Glance, About, Cerficate
 from django.utils.text import slugify
 
 def home(request):
     best_projects = Project.objects.filter(best_project=True)
     me_at_glance = Glance.objects.all()
+    certificate = Cerficate.objects.all()
     for glance in me_at_glance:
         temp_video_link = glance.video_link[32:]
         temp_video_link = "https://www.youtube.com/embed/"+temp_video_link
@@ -15,14 +16,18 @@ def home(request):
 
 
     about = About.objects.all()
-    print(about[0].image)
+    # about[0].image = "img/footer_card_profile.jpg"
+    # print(about[0].image)
     
     context = {'name':'gautam' ,
                'course':'djnago', 
                'projects': best_projects, 
                'me_at_glance': me_at_glance, 
+               'certificate1': about[0].image1,
+               'certificate2': about[0].image2,
+               'certificate3': about[0].image3,
                'about' : about[0]
-               }
+            }
     return render(request, 'home.html', context)
 
 

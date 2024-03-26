@@ -51,7 +51,9 @@ class Glance(models.Model):
 
 class Cerficate(models.Model):
     description = models.TextField()
-    image = models.ImageField(upload_to='media/certificates/')
+    image1 = models.ImageField(upload_to='media/certificates/', null=True)
+    image2 = models.ImageField(upload_to='media/certificates/', null=True)
+    image3 = models.ImageField(upload_to='media/certificates/', null=True)
     news = models.TextField()
     bugFix = models.TextField()
 
@@ -59,7 +61,6 @@ class About(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     dob = models.CharField(max_length=20)
-    image1 = models.ImageField(upload_to='footer_profile/', null=True)
-    image2 = models.ImageField(upload_to='footer_profile/', null=True)
-    image3 = models.ImageField(upload_to='footer_profile/', null=True)
+    image = models.ImageField(upload_to='footer_profile/', null=True)
+    
     video_link = models.CharField(max_length=400)

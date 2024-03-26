@@ -23,9 +23,9 @@ def home(request):
                'course':'djnago', 
                'projects': best_projects, 
                'me_at_glance': me_at_glance, 
-               'certificate1': about[0].image1,
-               'certificate2': about[0].image2,
-               'certificate3': about[0].image3,
+               'certificate1': certificate[0].image1,
+               'certificate2': certificate[0].image2,
+               'certificate3': certificate[0].image3,
                'about' : about[0]
             }
     return render(request, 'home.html', context)

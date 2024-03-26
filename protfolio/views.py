@@ -68,9 +68,21 @@ def contact(request):
 
 
 
-def project(request ):
+def project(request):
     projects = Project.objects.all()
-    context = {'projects': projects}
+    context = {
+        'projects': [
+            {
+                    "title": project.title,
+                    "description": cleanhtml(project.description),
+                    "technology": project.technology,
+                    "image": project.project_image,
+                    "created_date": project.created_date,
+                    "slug": project.slug
+                }
+                for project in projects
+        ]
+        }
     return render(request, 'project.html', context)
 
 def project_detail(request, course_slug):

@@ -4,6 +4,13 @@ from protfolio .models import Contact
 from django.contrib import messages
 from .models import Project, Glance, About, Cerficate
 from django.utils.text import slugify
+import re
+# as per recommendation from @freylis, compile once only
+CLEANR = re.compile('<.*?>') 
+
+def cleanhtml(raw_html):
+  cleantext = re.sub(CLEANR, '', raw_html)
+  return cleantext
 
 def home(request):
     best_projects = Project.objects.filter(best_project=True)
@@ -19,15 +26,26 @@ def home(request):
     # about[0].image = "img/footer_card_profile.jpg"
     # print(about[0].image)
     
-    context = {'name':'gautam' ,
-               'course':'djnago', 
-               'projects': best_projects, 
-               'me_at_glance': me_at_glance, 
-               'certificate1': certificate[0].image1,
-               'certificate2': certificate[0].image2,
-               'certificate3': certificate[0].image3,
-               'about' : about[0]
-            }
+    context = {
+        'name':'gautam' ,
+            'course':'djnago', 
+            'projects': [
+                {
+                    "title": project.title,
+                    "description": cleanhtml(project.description),
+                    "technology": project.technology,
+                    "image": project.project_image,
+                    "created_date": project.created_date,
+                    "slug": project.slug
+                }
+                for project in best_projects
+            ], 
+            'me_at_glance': me_at_glance, 
+            'certificate1': certificate[0].image1,
+            'certificate2': certificate[0].image2,
+            'certificate3': certificate[0].image3,
+            'about' : about[0]
+        }
     return render(request, 'home.html', context)
 
 

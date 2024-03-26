@@ -28,6 +28,8 @@
                         <h3 class="typing1"></h3>
                         <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View all
                             projects</a>
+                            <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View blog</a>
+                        <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View resume</a>
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -39,6 +41,8 @@
                         <h3 class="typing2"></h3>
                         <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View all
                             projects</a>
+                            <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View blog</a>
+                        <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View resume</a>
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -50,6 +54,8 @@
                         <h3 class="typing3"></h3>
                         <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View all
                             projects</a>
+                        <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View blog</a>
+                        <a class="btn btn-primary bg-dark" href="{% url 'project' %}" role="button">View resume</a>
                     </div>
                 </div>
             </div>
@@ -129,21 +135,24 @@
                 <div class="card mb-4 p-2 h-100 w-100">
                     <div class="d-flex justify-content-center"
                         style="height: 150px; overflow: hidden; object-fit: contain;">
-                        <img src="{{ project.project_image.url }}" class="card-img-top h-100 w-auto"
+                        <img src="media/{{ project.image }}" class="card-img-top h-100 w-auto"
                             alt="{{ project.project_image.url }}">
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ project.title }}</h5>
-                        <p class="card-text">{{ project.description|truncatechars:30| safe}}</p>
-                        <p class="card-text"><strong>Technology:</strong> {{ project.technology }}</p>
-                        <div class="d-flex justify-content-center">
+                    <div class="container ">
 
-                            <a href="{% url 'project_detail' project.slug %}" class="btn btn-primary">View Project</a>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text">{{ project.description|truncatechars:30}}</p>
+                            <p class="card-text"><strong>Technology:</strong> {{ project.technology }}</p>
+                            <div class="d-flex justify-content-center">
+    
+                                <a href="{% url 'project_detail' project.slug %}" class="btn btn-primary">View Project</a>
+                            </div>
+    
+    
                         </div>
-
-
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer" style="position: absolute; bottom: 0; width: 95%;">
                         <small class="text-muted">Created on: {{ project.created_date }}</small>
                     </div>
                 </div>

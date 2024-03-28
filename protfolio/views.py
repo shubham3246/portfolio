@@ -91,6 +91,27 @@ def project_detail(request, course_slug):
     temp_video_link = project.video_link[32:]
     temp_video_link = "https://www.youtube.com/embed/"+temp_video_link
 
+    required_projects = Project.objects.exclude(slug=course_slug)
+
+    all_projects = Project.objects.all()
+    prev_slug = None
+    next_slug = None
+    for proj in range(len(all_projects)):
+        if all_projects[proj].slug == course_slug:
+            if proj > 0:
+                prev_slug = proj-1
+            
+            if proj < len(all_projects)-1:
+                next_slug = proj+1
+
+            break
+
+    if prev_slug is not None:
+        prev_slug = all_projects[prev_slug].slug
+
+    if next_slug is not None:
+        next_slug = all_projects[next_slug].slug
+
     context = {
         "title": project.title,
         "description": project.description,
@@ -99,7 +120,10 @@ def project_detail(request, course_slug):
         "image": project.project_image,
         "demo_link": project.demo_link,
         "source_link": project.source_link,
-        "video_link": temp_video_link
+        "video_link": temp_video_link,
+        "all_projects": required_projects,
+        "prev_slug": prev_slug,
+        "next_slug": next_slug
     }
 
     print(temp_video_link)

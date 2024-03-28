@@ -20,12 +20,9 @@ class Contact(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=200)
     collaborators = models.CharField(max_length=300, blank = True, null = True)
-    description = RichTextField(config_name='default',max_length=300000,blank=True)
     technology = models.CharField(max_length=50)
     project_image = models.ImageField(upload_to='project_images/')
-    demo_link = models.URLField(max_length=200)
     source_link = models.URLField(max_length=200)
-    video_link = models.CharField(max_length=500, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(default=False)
     best_project = models.BooleanField(default=False)
@@ -38,6 +35,14 @@ class Project(models.Model):
         if not self.slug:
          self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+class NodeProject(models.Model):
+    project = models.ForeignKey(Project, null=True, on_delete=models.CASCADE, related_name="node_project")
+    heading = models.CharField(max_length = 500, null=True, blank=True)
+    description = RichTextField(config_name='default',max_length=300000,blank=True)
+    demo_link = models.URLField(max_length=200)
+    video_link = models.CharField(max_length=500, blank=True, null=True)
+
 
 
 

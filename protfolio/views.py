@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+
 from protfolio .models import Contact
 from django.contrib import messages
 from .models import Project, Glance, About, Cerficate
@@ -32,7 +33,7 @@ def home(request):
             'projects': [
                 {
                     "title": project.title,
-                    "description": cleanhtml(project.description),
+                    # "description": cleanhtml(project.description),
                     "technology": project.technology,
                     "image": project.project_image,
                     "created_date": project.created_date,
@@ -74,7 +75,7 @@ def project(request):
         'projects': [
             {
                     "title": project.title,
-                    "description": cleanhtml(project.description),
+                    # "description": cleanhtml(project.description),
                     "technology": project.technology,
                     "image": project.project_image,
                     "created_date": project.created_date,
@@ -87,46 +88,38 @@ def project(request):
 
 def project_detail(request, course_slug):
     project = Project.objects.get(slug=course_slug)
+    try: 
+        required_views = project.node_project.all()
+        video_links = []
+        descriptions = []
+        for proj in required_views:
+            temp_video_link = proj.video_link[32:]
+            temp_video_link = "https://www.youtube.com/embed/"+temp_video_link
+            video_links.append(temp_video_link)
 
-    temp_video_link = project.video_link[32:]
-    temp_video_link = "https://www.youtube.com/embed/"+temp_video_link
-
-    required_projects = Project.objects.exclude(slug=course_slug)
-
-    all_projects = Project.objects.all()
-    prev_slug = None
-    next_slug = None
-    for proj in range(len(all_projects)):
-        if all_projects[proj].slug == course_slug:
-            if proj > 0:
-                prev_slug = proj-1
-            
-            if proj < len(all_projects)-1:
-                next_slug = proj+1
-
-            break
-
-    if prev_slug is not None:
-        prev_slug = all_projects[prev_slug].slug
-
-    if next_slug is not None:
-        next_slug = all_projects[next_slug].slug
+            descriptions.append(proj.description)
+    except Exception as e:
+        print(e)
+        return Http404()
 
     context = {
         "title": project.title,
-        "description": project.description,
+        "first_description": descriptions[0],
+        "all_descriptions": descriptions[1:],
         "technology": project.technology,
         "collaborators": project.collaborators,
         "image": project.project_image,
-        "demo_link": project.demo_link,
+        # "demo_link": project.demo_link,
         "source_link": project.source_link,
-        "video_link": temp_video_link,
-        "all_projects": required_projects,
-        "prev_slug": prev_slug,
-        "next_slug": next_slug
+        "first_video": video_links[0],
+        "video_links": video_links[1:],
+        "all_projects": required_views,
+        # "prev_slug": prev_slug,
+        # "next_slug": next_slug
     }
+    # print(video_links[1:])
 
-    print(temp_video_link)
+    # print(temp_video_link)
     return render(request, "project_detail.html", context=context)
 
 

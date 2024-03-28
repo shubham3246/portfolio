@@ -11,7 +11,7 @@
 
     <div class="p-1 d-flex">
         <div class="w-100">
-            <iframe style="width: 100%; height: 450px;" src="{{video_link}}" title="YouTube video player" frameborder="0"
+            <iframe style="width: 100%; height: 450px;" src="{{first_video}}" title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
             <ul class="nav">
@@ -28,14 +28,14 @@
                     <a href="{{ source_link }}" class="btn btn-primary mx-2" target="_blank">Source Code</a>
                 </li>
             </ul>
-            <p>{{description | safe}}</p>
+            <p>{{first_description | safe}}</p>
         </div>
         <div class="w-75">
             <div class="container list-group" style="margin-left: 10px;">
                 <!-- <img src="/media/{{image}}" class="card-img-top p-5 img-fluid img-centered img-responsive"
                     style="height:300px;width:400px">    -->
                 {% for proj in all_projects %}
-                <a href="{% url 'project_detail' proj.slug %}" class="list-group-item list-group-item-action">{{proj.title}}</a>
+                <a class="list-group-item list-group-item-action side_project_links" id="{{proj}}">{{proj.heading}}</a>
                 {% endfor %}
             </div>
         </div>
@@ -45,30 +45,26 @@
     <div class="b-example-divider"></div>
     <div class="container ">
         {% if prev_slug %}
-        <a href="{% url 'project_detail' prev_slug %}" class="btn btn-secondary">Previous Project</a>
+        <a href="" class="btn btn-secondary">Previous Project</a>
         {% else %}
         <a href="" class="btn btn-secondary disabled" aria-disabled="true">Previous Project</a>
         {% endif %}
 
-        <a href="{% url 'project_detail' next_slug %}" class="btn btn-secondary">Next Project</a>
+        <a href="" class="btn btn-secondary">Next Project</a>
 
     </div>
-    <div class="b-example-divider"></div>
-    <div class="container ">
-        <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-dark">About</a></li>
-            </ul>
-            <p class="text-center text-muted">Copyright for Gautam singh | Allright Resive 2023</p>
-        </footer>
+    
 
-    </div>
+    <script>
+        side_project_links = document.querySelector(".side_project_links");
+        side_project_links.addEventListener("click", ()=>{
+            console.log(side_project_links.id);
+        });
+        for (link of "{{video_links}}") {
 
-
+            console.log("{{video_links}}")
+        }
+    </script>
 
     {% endblock %}
 

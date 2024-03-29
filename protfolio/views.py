@@ -87,32 +87,39 @@ def project(request):
     return render(request, 'project.html', context)
 
 def project_detail(request, course_slug):
+    curr_proj = request.GET.get('proj')
+    print(curr_proj, type(curr_proj))
     project = Project.objects.get(slug=course_slug)
-    try: 
-        required_views = project.node_project.all()
-        video_links = []
-        descriptions = []
-        for proj in required_views:
-            temp_video_link = proj.video_link[32:]
-            temp_video_link = "https://www.youtube.com/embed/"+temp_video_link
-            video_links.append(temp_video_link)
+    required_views = project.node_project.all()
 
-            descriptions.append(proj.description)
-    except Exception as e:
-        print(e)
-        return Http404()
+    all_projects = Project.objects.all()
+    for proj in range(len(all_projects)):
+        if all_projects[proj] == project:
+            if pro
+            break
+
+    curr_desc = None
+    curr_video = None
+
+    if curr_proj is not None and curr_proj != "":
+        curr_desc = project.node_project.get(slug = curr_proj).description
+        temp_video_link = project.node_project.get(slug = curr_proj).video_link[32:]
+        temp_video_link = "https://www.youtube.com/embed/"+temp_video_link
+        modified_url_string = re.sub(r'&.*$', '', temp_video_link)
+        curr_video = modified_url_string
+
 
     context = {
         "title": project.title,
-        "first_description": descriptions[0],
-        "all_descriptions": descriptions[1:],
+        "first_description": curr_desc,
+        # "all_descriptions": descriptions,
         "technology": project.technology,
         "collaborators": project.collaborators,
         "image": project.project_image,
         # "demo_link": project.demo_link,
         "source_link": project.source_link,
-        "first_video": video_links[0],
-        "video_links": video_links[1:],
+        "first_video": curr_video,
+        # "video_links": video_links,
         "all_projects": required_views,
         # "prev_slug": prev_slug,
         # "next_slug": next_slug

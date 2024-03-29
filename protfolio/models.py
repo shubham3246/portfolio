@@ -36,15 +36,22 @@ class Project(models.Model):
          self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
+
 class NodeProject(models.Model):
     project = models.ForeignKey(Project, null=True, on_delete=models.CASCADE, related_name="node_project")
     heading = models.CharField(max_length = 500, null=True, blank=True)
     description = RichTextField(config_name='default',max_length=300000,blank=True)
     demo_link = models.URLField(max_length=200)
     video_link = models.CharField(max_length=500, blank=True, null=True)
+    slug = models.CharField(max_length=1000, null=True,  blank=True)
 
-
-
+    def __str__(self):
+        return self.heading
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+         self.slug = slugify(self.heading)
+        super().save(*args, **kwargs)
 
 
 class Glance(models.Model):

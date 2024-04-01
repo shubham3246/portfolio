@@ -1,11 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import User
+
 
 # Importing models
 from protfolio.models import Contact, Project, Glance, About, Cerficate
 from django.contrib import messages
 from django.utils.text import slugify
 import re
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Regular expression pattern to clean HTML tags
 CLEANR = re.compile('<.*?>') 
@@ -17,6 +25,7 @@ def cleanhtml(raw_html):
 
 # Home page view
 def home(request):
+    print(os.environ['CLIENT_ID'])
     # Fetching best projects, me at glance info, and certificates
     best_projects = Project.objects.filter(best_project=True)
     me_at_glance = Glance.objects.all()
@@ -125,16 +134,16 @@ def project_detail(request, course_slug):
 def search(request):
     query = request.GET['query']
     if len(query) > 78:
-        allPosts = Post.objects.none()
+        allPosts = Project.objects.none()
     else:
-        allPostsTitle = Post.objects.filter(title__icontains=query)
-        allPostsAuthor = Post.objects.filter(author__icontains=query)
-        allPostsContent = Post.objects.filter(content__icontains=query)
-        allPosts = allPostsTitle.union(allPostsContent, allPostsAuthor)
+        allPostsTitle = Project.objects.filter(title__icontains=query)
+        allPostsTechnology = Project.objects.filter(technology__icontains=query)
+        allPostsCollaborators = Project.objects.filter(collaborators__icontains=query)
+        allPosts = allPostsTitle.union(allPostsCollaborators, allPostsTechnology)
     if allPosts.count() == 0:
         messages.warning(request, "No search results found. Please refine your query.")
     params = {'allPosts': allPosts, 'query': query}
-    return render(request, 'home/search.html', params)
+    return render(request, 'search.html', params)
 
 
 # User sign up view

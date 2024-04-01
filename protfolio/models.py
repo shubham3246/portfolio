@@ -76,3 +76,4 @@ class About(models.Model):
     image = models.ImageField(upload_to='footer_profile/', null=True)
     
     video_link = models.CharField(max_length=400)
+

@@ -43,6 +43,7 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('protfolio.urls')),
+    path('blogs/', include('blog.urls'))
 ]
 
 # Serve static files during development

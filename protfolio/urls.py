@@ -1,5 +1,7 @@
 from django.urls import path, include
 from django.contrib import admin
+# from allauth.socialaccount.providers.google import urls as google_urls
+
 
 from . import views
 
@@ -15,9 +17,10 @@ urlpatterns = [
     path('projects', views.project, name='project'),
     path('project_detail/<slug:course_slug>', views.project_detail, name='project_detail'),
     path('signup', views.handleSignUp, name="handleSignUp"),
+    path('resume', views.resume, name="resume"),
     path('login', views.handeLogin, name="handleLogin"),
     path('logout', views.handelLogout, name="handleLogout"),
-    path('accounts/', include('allauth.urls')),
+    path('social-auth/', include('social_django.urls')),
     # path('projects/', views.project_list, name='projects'),
 
 ]

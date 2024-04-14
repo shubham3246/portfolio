@@ -25,7 +25,6 @@ def cleanhtml(raw_html):
 
 # Home page view
 def home(request):
-    print(os.environ['CLIENT_ID'])
     # Fetching best projects, me at glance info, and certificates
     best_projects = Project.objects.filter(best_project=True)
     me_at_glance = Glance.objects.all()
@@ -60,12 +59,16 @@ def home(request):
         'certificate3': certificate[0].image3,
         'about': about[0]
     }
-    return render(request, 'home.html', context)
+    return render(request, 'portfolio/home.html', context)
 
 
 # About page view
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'portfolio/about.html')
+
+
+def resume(request):
+    return render(request, 'portfolio/resume.html')
 
 
 # Contact page view
@@ -79,7 +82,7 @@ def contact(request):
         contact.save()
         messages.success(request, "Your message has been successfully sent")
 
-    return render(request, 'contact.html')
+    return render(request, 'portfolio/contact.html')
 
 
 # Projects page view
@@ -97,7 +100,7 @@ def project(request):
             for project in projects
         ]
     }
-    return render(request, 'project.html', context)
+    return render(request, 'portfolio/project.html', context)
 
 
 # Project detail page view
@@ -110,24 +113,54 @@ def project_detail(request, course_slug):
     curr_video = None
 
     if curr_proj is not None and curr_proj != "":
-        curr_desc = project.node_project.get(slug=curr_proj).description
-        temp_video_link = project.node_project.get(slug=curr_proj).video_link[32:]
-        temp_video_link = "https://www.youtube.com/embed/" + temp_video_link
-        modified_url_string = re.sub(r'&.*$', '', temp_video_link)
-        curr_video = modified_url_string
+        curr = project.node_project.get(slug=curr_proj)
+        curr_desc = curr.description
+        temp_video_link = curr.video_link
+        if temp_video_link is not None and temp_video_link != "":
+            temp_video_link = temp_video_link[32:]
+            temp_video_link = "https://www.youtube.com/embed/" + temp_video_link
+            modified_url_string = re.sub(r'&.*$', '', temp_video_link)
+            curr_video = modified_url_string
+        else:
+            curr_video = None
+
+    else:
+        curr = required_views[0]
+        curr_desc = curr.description
+        temp_video_link = curr.video_link
+        if temp_video_link is not None and temp_video_link != "":
+            temp_video_link = required_views[0].video_link[32:]
+            temp_video_link = "https://www.youtube.com/embed/" + temp_video_link
+            modified_url_string = re.sub(r'&.*$', '', temp_video_link)
+            curr_video = modified_url_string
+        else:
+            curr_video = None
+
+    next_link = None
+    prev_link = None
+
+    for link in range(len(required_views)):
+        if required_views[link] == curr:
+            if link < len(required_views) - 1:
+                next_link = f"?proj={required_views[link+1].slug}"
+            if link > 0:
+                prev_link = f"?proj={required_views[link-1].slug}"
 
     context = {
         "title": project.title,
-        "first_description": curr_desc,
+        "description": curr_desc,
         "technology": project.technology,
         "collaborators": project.collaborators,
         "image": project.project_image,
         "source_link": project.source_link,
-        "first_video": curr_video,
+        "video": curr_video,
         "all_projects": required_views,
+        "slug": project.slug,
+        "next_link": next_link,
+        "prev_link": prev_link
     }
 
-    return render(request, "project_detail.html", context=context)
+    return render(request, "portfolio/project_detail.html", context=context)
 
 
 # Search functionality view
@@ -143,7 +176,7 @@ def search(request):
     if allPosts.count() == 0:
         messages.warning(request, "No search results found. Please refine your query.")
     params = {'allPosts': allPosts, 'query': query}
-    return render(request, 'search.html', params)
+    return render(request, 'portfolio/search.html', params)
 
 
 # User sign up view
@@ -206,3 +239,6 @@ def handelLogout(request):
     logout(request)
     messages.success(request, "Successfully logged out")
     return redirect('home')
+
+# ---------------------------------------
+

@@ -43,12 +43,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'protfolio',
+    'rest_framework',
+    'social_django',
+    'blog',
+    'django.contrib.humanize',
     # 'auth_app',
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google'
 ]
 
 MIDDLEWARE = [
@@ -56,10 +60,11 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
+    # 'allauth.account.middleware.AccountMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware'
 ]
 
 ROOT_URLCONF = 'proname.urls'
@@ -67,7 +72,7 @@ ROOT_URLCONF = 'proname.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends'
             ],
         },
     },
@@ -144,24 +150,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
+    # 'allauth.account.auth_backends.AuthenticationBackend'
+    'social_core.backends.google.GoogleOAuth2'
 ]
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE' : [
-            'profile',
-            'email'
-        ],
-        'APP': {
-            'client_id': os.environ['CLIENT_ID'],
-            'secret': os.environ['CLIENT_SECRET'],
-        },
-        'AUTH_PARAMS': {
-            'access_type':'online',
-        }
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE' : [
+#             'profile',
+#             'email'
+#         ],
+#         'APP': {
+#             'client_id': os.environ['CLIENT_ID'],
+#             'secret': os.environ['CLIENT_SECRET'],
+#         },
+#         'AUTH_PARAMS': {
+#             'access_type':'online',
+#         }
+#     }
+# }
 
 SITE_ID = 2
 
@@ -169,3 +176,5 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ['CLIENT_ID'] 
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ['CLIENT_SECRET'] 

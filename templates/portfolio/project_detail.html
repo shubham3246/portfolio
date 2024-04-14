@@ -12,10 +12,15 @@
 
 <div class="p-1 d-flex">
     <div class="w-100">
-        <iframe id="project_detail_video" style="width: 100%; height: 450px;" src="{{first_video | safe}}"
+        {% if video %}
+        <iframe id="project_detail_video" style="width: 100%; height: 450px;" src="{{video | safe}}"
             title="YouTube video player" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
+            {% else %}
+ <img src="/media/{{image}}" class="card-img-top px-5 pb-5 img-fluid img-centered img-responsive"
+                    style="width:400px"> 
+            {% endif %}
         <ul class="nav">
             <li class="nav-item">
                 <a class="nav-link active btn btn-primary mx-2" aria-current="page" href="#">Overview</a>
@@ -30,35 +35,36 @@
                 <a href="{{ source_link }}" class="btn btn-primary mx-2" target="_blank">Source Code</a>
             </li>
         </ul>
-        <p>{{first_description | safe}}</p>
+        <p>{{description | safe}}</p>
+        <div style="display: none;" id="curr_slug">{{slug}}</div>
     </div>
     <div class="w-75">
         <div class="container list-group" style="margin-left: 10px;">
-            <!-- <img src="/media/{{image}}" class="card-img-top p-5 img-fluid img-centered img-responsive"
-                    style="height:300px;width:400px">    -->
+           
             {% for proj in all_projects %}
             <a href="?proj={{proj.slug}}" class="list-group-item list-group-item-action side_project_links"
-                id="proj{{ forloop.counter0 }}">
+                id="proj{{ forloop.counter0 }}" data-slug="{{slug}}">
                 {{proj.heading }}{{ forloop.counter0 }}
             </a>
             {% endfor %}
 
         </div>
     </div>
+    
 </div>
 
 
 <div class="b-example-divider"></div>
 <div class="container ">
-    {% if prev_slug %}
-    <a href="" class="btn btn-secondary">Previous Project</a>
+    {% if prev_link %}
+    <a href="{{prev_link}}" class="btn btn-secondary">Previous Project</a>
     {% else %}
-    <a href="" class="btn btn-secondary disabled" aria-disabled="true">Previous Project</a>
+    <a class="btn btn-secondary disabled" aria-disabled="true">Previous Project</a>
     {% endif %}
-    {% if prev_slug %}
-    <a href="" class="btn btn-secondary">Next Project</a>
+    {% if next_link %}
+    <a href="{{next_link}}" class="btn btn-secondary">Next Project</a>
     {% else %}
-    <a href="" class="btn btn-secondary disabled" aria-disabled="true">Next Project</a>
+    <a class="btn btn-secondary disabled" aria-disabled="true">Next Project</a>
     {% endif %}
 </div>
 

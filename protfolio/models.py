@@ -77,3 +77,5 @@ class About(models.Model):
     
     video_link = models.CharField(max_length=400)
 
+
+

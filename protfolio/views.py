@@ -105,62 +105,66 @@ def project(request):
 
 # Project detail page view
 def project_detail(request, course_slug):
-    curr_proj = request.GET.get('proj')
-    project = Project.objects.get(slug=course_slug)
-    required_views = project.node_project.all()
+    try:
+        curr_proj = request.GET.get('proj')
+        project = Project.objects.get(slug=course_slug)
+        required_views = project.node_project.all()
 
-    curr_desc = None
-    curr_video = None
+        curr_desc = None
+        curr_video = None
 
-    if curr_proj is not None and curr_proj != "":
-        curr = project.node_project.get(slug=curr_proj)
-        curr_desc = curr.description
-        temp_video_link = curr.video_link
-        if temp_video_link is not None and temp_video_link != "":
-            temp_video_link = temp_video_link[32:]
-            temp_video_link = "https://www.youtube.com/embed/" + temp_video_link
-            modified_url_string = re.sub(r'&.*$', '', temp_video_link)
-            curr_video = modified_url_string
+        if curr_proj is not None and curr_proj != "":
+            curr = project.node_project.get(slug=curr_proj)
+            curr_desc = curr.description
+            temp_video_link = curr.video_link
+            if temp_video_link is not None and temp_video_link != "":
+                temp_video_link = temp_video_link[32:]
+                temp_video_link = "https://www.youtube.com/embed/" + temp_video_link
+                modified_url_string = re.sub(r'&.*$', '', temp_video_link)
+                curr_video = modified_url_string
+            else:
+                curr_video = None
+
         else:
-            curr_video = None
+            curr = required_views[0]
+            curr_desc = curr.description
+            temp_video_link = curr.video_link
+            if temp_video_link is not None and temp_video_link != "":
+                temp_video_link = required_views[0].video_link[32:]
+                temp_video_link = "https://www.youtube.com/embed/" + temp_video_link
+                modified_url_string = re.sub(r'&.*$', '', temp_video_link)
+                curr_video = modified_url_string
+            else:
+                curr_video = None
 
-    else:
-        curr = required_views[0]
-        curr_desc = curr.description
-        temp_video_link = curr.video_link
-        if temp_video_link is not None and temp_video_link != "":
-            temp_video_link = required_views[0].video_link[32:]
-            temp_video_link = "https://www.youtube.com/embed/" + temp_video_link
-            modified_url_string = re.sub(r'&.*$', '', temp_video_link)
-            curr_video = modified_url_string
-        else:
-            curr_video = None
+        next_link = None
+        prev_link = None
 
-    next_link = None
-    prev_link = None
+        for link in range(len(required_views)):
+            if required_views[link] == curr:
+                if link < len(required_views) - 1:
+                    next_link = f"?proj={required_views[link+1].slug}"
+                if link > 0:
+                    prev_link = f"?proj={required_views[link-1].slug}"
 
-    for link in range(len(required_views)):
-        if required_views[link] == curr:
-            if link < len(required_views) - 1:
-                next_link = f"?proj={required_views[link+1].slug}"
-            if link > 0:
-                prev_link = f"?proj={required_views[link-1].slug}"
+        context = {
+            "title": project.title,
+            "description": curr_desc,
+            "technology": project.technology,
+            "collaborators": project.collaborators,
+            "image": project.project_image,
+            "source_link": project.source_link,
+            "video": curr_video,
+            "all_projects": required_views,
+            "slug": project.slug,
+            "next_link": next_link,
+            "prev_link": prev_link
+        }
 
-    context = {
-        "title": project.title,
-        "description": curr_desc,
-        "technology": project.technology,
-        "collaborators": project.collaborators,
-        "image": project.project_image,
-        "source_link": project.source_link,
-        "video": curr_video,
-        "all_projects": required_views,
-        "slug": project.slug,
-        "next_link": next_link,
-        "prev_link": prev_link
-    }
-
-    return render(request, "portfolio/project_detail.html", context=context)
+        return render(request, "portfolio/project_detail.html", context=context)
+    
+    except Exception as e:
+        return HttpResponse("Add a node to the project")
 
 
 # Search functionality view

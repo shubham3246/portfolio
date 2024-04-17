@@ -83,7 +83,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{glance.title}}</h5>
                     <p class="card-text">
-                        {{glance.description}}
+                        {{glance.description | truncatechars:80}}
                     </p>
                     <div class="d-flex justify-content-center">
                         <a href="{{glance.channel_link}}" class="btn btn-primary">Go somewhere</a>

@@ -19,17 +19,17 @@
 <div class="container my-3">
   <h2>Coding Articles by iCoder</h2>
   {% for post in allPosts %}
-  <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative">
-    <div class="col p-4 d-flex flex-column position-static">
+  <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 my-4 position-relative p-4">
+    <div class="col pe-5 d-flex flex-column position-static">
       <strong class="d-inline-block mb-2 text-primary">Article by {{ post.author }}({{post.views}} views)</strong>
-      <h3 class="mb-0"><a class="text-dark" href="/blog/{{ post.slug }}">{{ post.title }}</a></h3>
+      <h3 class="my-2 text-left"><a class="text-dark" href="/blog/{{ post.slug }}">{{ post.title }}</a></h3>
       <div class="mb-1 text-muted">{{ post.datetime }}</div>
       <p class="card-text mb-auto">{{ post.content|safe|truncatechars:170 }}</p>
       <div class="my-2">
         <a href="{% url 'blogPost' post.slug %}" role="button" class="btn btn-primary">Continue reading</a>
       </div>
     </div>
-    <div class="col-auto d-none d-lg-block">
+    <div class="d-flex align-items-center justify-content-center">
       {% if post.post_image %}
         <img src="{{ post.post_image.url }}" alt="Post Image"  style="height:200px;width:250px;">
       {% else %}

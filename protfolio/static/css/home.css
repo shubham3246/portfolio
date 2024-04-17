@@ -1311,6 +1311,9 @@ body .card_right__button a:hover {
     height: 100%;
     
   }
+  body>nav {
+    z-index: 2000;
+  }
   body .resume-wrapper {
     position: relative;
     width: 100%;

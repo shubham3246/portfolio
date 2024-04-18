@@ -77,5 +77,88 @@ class About(models.Model):
     
     video_link = models.CharField(max_length=400)
 
+# models for resume
+class Resume(models.Model):
+    image = models.ImageField(upload_to="resume")
+    phone = models.CharField(max_length=12)
+    email = models.EmailField(max_length=50)
+    address = models.CharField(max_length=100)
+    twitter = models.CharField(max_length=300, null=True)
+    leetcode = models.CharField(max_length=300, null= True)
+    github = models.CharField(max_length=300, null= True)
+    linkedIn = models.CharField(max_length=300, null= True)
+
+class Education(models.Model):
+    university = models.CharField(max_length=400)
+    branch = models.CharField(max_length=300)
+    marks = models.CharField(max_length=10)
+    date = models.CharField(max_length=30)
+    description = models.TextField()
+
+class Skill(models.Model):
+    language = models.CharField(max_length=200, null=True)
+    developement = models.CharField(max_length=200, null=True)
+    mobile_developement = models.CharField(max_length=400, null=True)
+    testing = models.CharField(max_length=400, null=True)
+    designing = models.CharField(max_length=400, null=True)
+    tools = models.CharField(max_length=400, null=True)
+    video_editing = models.CharField(max_length=400, null=True)
+
+
+class Experience(models.Model):
+    title = models.CharField(max_length=400)
+    subtitle = models.CharField(max_length=400)
+    description = models.TextField()
+    date = models.CharField(max_length=400)
+    company = models.CharField(max_length=400)
+    location = models.CharField(max_length=400)
+
+# resume projects
+class AcademicProject(models.Model):
+    title = models.CharField(max_length=400, null=True)
+    desct = models.CharField(max_length=400, null=True)
+    key_skills = models.CharField(max_length=400, null=True)
+    repository = models.CharField(max_length=400, null=True)
+    date = models.CharField(max_length=400, null=True)
+    author = models.CharField(max_length=400, null=True)
+
+
+class Achievement(models.Model):
+    title = models.CharField(max_length=400, null=True)
+    description = models.TextField()
+    date  = models.CharField(max_length=400, null=True)
+    specialization = models.CharField(max_length=400, null=True)
+
+class Certificate(models.Model):
+    title = models.CharField(max_length=300, null=True)
+    description = models.TextField()
+    link = models.CharField(max_length=300, null=True)
+    issue_date = models.CharField(max_length=300, null=True)
+
+
+class Interest(models.Model):
+    name = models.CharField(max_length=100)
+
+class Language(models.Model):
+    name = models.CharField(max_length=300)
+
+class Note(models.Model):
+    image = models.ImageField(upload_to="notes")
+    title = models.CharField(max_length=300, null=True)
+    content = models.TextField()
+    pdf = models.FileField(upload_to="notes_pdf")
+
+
+
+
+
+
+    
+
+
+
+    
+
+
 
 

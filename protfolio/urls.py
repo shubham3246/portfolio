@@ -18,6 +18,7 @@ urlpatterns = [
     path('project_detail/<slug:course_slug>', views.project_detail, name='project_detail'),
     path('signup', views.handleSignUp, name="handleSignUp"),
     path('resume', views.resume, name="resume"),
+    path('notes', views.notes, name="notes"),
     path('login', views.handeLogin, name="handleLogin"),
     path('logout', views.handelLogout, name="handleLogout"),
     path('social-auth/', include('social_django.urls')),

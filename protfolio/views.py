@@ -5,9 +5,10 @@ from django.contrib.auth.models import User
 
 
 # Importing models
-from protfolio.models import Contact, Project, Glance, About, Cerficate
+from protfolio.models import Contact, Project, Glance, About, Cerficate, Resume, Note
 from django.contrib import messages
 from django.utils.text import slugify
+from proname import settings
 import re
 
 import os
@@ -68,7 +69,14 @@ def about(request):
 
 
 def resume(request):
-    return render(request, 'portfolio/resume.html')
+    data = Resume.objects.all()
+    context = {
+        'image': f'{settings.MEDIA_URL}{data[0].image}',
+        'email': data[0].email,
+        'phone': data[0].phone,
+        'address': data[0].address
+    }
+    return render(request, 'portfolio/resume.html', context=context)
 
 
 # Contact page view
@@ -166,6 +174,20 @@ def project_detail(request, course_slug):
     except Exception as e:
         return HttpResponse("Add a node to the project")
 
+def notes(request):
+    notes = Note.objects.all()
+    context = {
+        "notes" : [
+            {
+                "image": f'{settings.MEDIA_URL}{note.image}',
+                "title": note.title,
+                "content": note.content,
+                "pdf": f'{settings.MEDIA_URL}{note.pdf}'
+            }
+            for note in notes
+        ]
+    }
+    return render(request, "portfolio/notes.html", context=context)
 
 # Search functionality view
 def search(request):

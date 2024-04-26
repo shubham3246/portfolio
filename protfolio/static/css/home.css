@@ -1678,6 +1678,10 @@ body .card_right__button a:hover {
     width: 60%;
     background-color: #fff;
   }
+
+  .typed-cursor{
+    display: none !important;
+  }
   
   @-webkit-keyframes incomingPulse {
     0% {
